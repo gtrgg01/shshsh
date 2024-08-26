@@ -1,19 +1,24 @@
 #!/bin/bash
 
-# Ask for the number of websites
+# Prompt for the number of websites
 echo "Are you setting up one website or multiple websites? (Enter '1' for one or '2' for multiple)"
 read choice
 
-if [ "$choice" -eq 1 ]; then
+# Validate the choice input
+if [[ "$choice" == "1" ]]; then
     echo "Enter the domain name for your website:"
     read domain
     domains=("$domain")
-elif [ "$choice" -eq 2 ]; then
+elif [[ "$choice" == "2" ]]; then
     echo "Enter the number of websites you want to set up:"
     read num_sites
+    # Validate that the input is a number
+    if ! [[ "$num_sites" =~ ^[0-9]+$ ]]; then
+        echo "Invalid number. Please run the script again and enter a valid number."
+        exit 1
+    fi
     domains=()
-    for (( i=1; i<=num_sites; i++ ))
-    do
+    for (( i=1; i<=num_sites; i++ )); do
         echo "Enter the domain name for website $i:"
         read domain
         domains+=("$domain")
